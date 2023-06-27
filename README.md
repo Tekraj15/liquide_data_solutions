@@ -4,4 +4,4 @@ lambda_func_data_extract.py - Lambda Function which regularly extracts data from
 
 liquide_etl.py - AWS Glue ETL job used for processing the raw data, and convert the data into parquet format for efficient data query and retrieval, into s3 folder.
 
-The ETL job can be scheduled either using Step function which will be triggerred once the data extracted by lambda function will be uploaded in S3.
+The ETL job can be scheduled using the Step function and it will be triggered once the Lambda Function successfully extracts data and uploads it in S3.
