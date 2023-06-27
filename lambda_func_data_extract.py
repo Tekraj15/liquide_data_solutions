@@ -72,10 +72,10 @@ fin_df.to_csv(csv_buffer, index=False)
 
 
 # Upload the finance_ration CSV data to S3
-s3_client.put_object(Body=csv_buffer.getvalue(), Bucket=bucket_name, Key=file_path_fin)
+s3_client.put_object(Body=csv_buffer.getvalue(), Bucket=bucket_name, Key=key_fin)
 
 # Upload the finance_ration CSV data to S3
 
 quarter_cons_df.to_csv(csv_buffer, index=False)
-s3_client.put_object(Body=csv_buffer.getvalue(), Bucket=bucket_name, Key=file_path_quart)
+s3_client.put_object(Body=csv_buffer.getvalue(), Bucket=bucket_name, Key=key_quart)
 
