@@ -61,7 +61,7 @@ def process_csv_to_parq_fin(s3_bucket, key, file_path):
 
 
 
-def process_csv_to_parq_quarter(s3_bucket, key, file_path):
+def process_csv_to_parq_quart(s3_bucket, key, file_path):
 
   s3_path_rd = 's3://'+ s3_bucket + '/' + file_path
 
@@ -102,12 +102,24 @@ def process_csv_to_parq_quarter(s3_bucket, key, file_path):
   df.printSchema()
   return df
 
+# Write financial ration data to s3, in parquet format
 s3_bucket = 'tekraj-test2'
-key = 'liquide/finance_fr/load_date=2023-06-26/'
-file_path = 'liquide_raw_data/finance_fr/load_date=2023-06-26/finance_ratio_2023-06-26.csv'
+key_fin = 'liquide/finance_fr/load_date=2023-06-26/'
+file_path_fin = 'liquide_raw_data/finance_fr/load_date=2023-06-26/finance_ratio_2023-06-26.csv'
 s3_path_wr = 's3://'+ s3_bucket + '/' + key + '.parquet'
 
-df = process_csv_to_parq_fin(s3_bucket, key, file_path)
+df = process_csv_to_parq_fin(s3_bucket, key_fin, file_path_fin)
 df = df.withColumn('load_date', today)
 df.printSchema()
 df.write.mode("overwrite").partitionBy("load_date").parquet(s3_path_wr)  
+
+
+# write quarterly cons data to s3, in parquet format
+key_quart = 'liquide/finance_fr/load_date=2023-06-26/'
+file_path_quart = 'liquide_raw_data/quarterly_cons/load_date=2023-06-26/fquarterly_cons_2023-06-26.csv'
+s3_path_wr = 's3://'+ s3_bucket + '/' + key_quart + '.parquet'
+
+df = process_csv_to_parq_quart(s3_bucket, key_quart, file_path_quart)
+df = df.withColumn('load_date', today)
+df.printSchema()
+df.write.mode("overwrite").partitionBy("load_date").parquet(s3_path_wr)
